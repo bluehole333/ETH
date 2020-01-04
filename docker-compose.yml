@@ -1,0 +1,65 @@
+version: '3.3'
+
+   
+services:
+
+  node:
+    image: enochi/cvb
+    command:  --rpc --rpcaddr "0.0.0.0" --rpcport 8545  --ws --wsaddr "0.0.0.0" --wsport 18546 --wsapi "eth,web3,txpool" --wsorigins \"\*\"  
+    ports:
+      - "8545:8545"
+      - "8546:18546"
+      - "30303:30303"
+      - "30303:30303/udp"
+      - "30304:30304/udp"
+    volumes:
+      - /etc/localtime:/etc/localtime
+      - ./data:/root/.ethereum/
+    environment:
+      - TZ=Asia/Shanghai
+    container_name: node
+  node1:
+    image: enochi/cvb
+    command:  --rpc --rpcaddr "0.0.0.0" --rpcport 8545  --ws --wsaddr "0.0.0.0" --wsport 18546 --wsapi "eth,web3,txpool" --wsorigins \"\*\"
+    ports:
+      - "28545:8545"
+      - "28546:18546"
+      - "30313:30303"
+      - "30313:30303/udp"
+      - "30314:30304/udp"
+    volumes:
+      - /etc/localtime:/etc/localtime
+      - ./data1:/root/.ethereum/
+    environment:
+      - TZ=Asia/Shanghai
+    container_name: node1
+  node2:
+    image: enochi/cvb
+    command:  --rpc --rpcaddr "0.0.0.0" --rpcport 8545  --ws --wsaddr "0.0.0.0" --wsport 18546 --wsapi "eth,web3,txpool" --wsorigins \"\*\" 
+    ports:
+      - "38545:8545"
+      - "38546:18546"
+      - "30323:30303"
+      - "30323:30303/udp"
+      - "30324:30304/udp"
+    volumes:
+      - /etc/localtime:/etc/localtime
+      - ./data2:/root/.ethereum/
+    environment:
+      - TZ=Asia/Shanghai
+    container_name: node2  
+  node3:
+    image: enochi/cvb
+    command:  --rpc --rpcaddr "0.0.0.0" --rpcport 8545  --ws --wsaddr "0.0.0.0" --wsport 18546 --wsapi "eth,web3,txpool" --wsorigins \"\*\" 
+    ports:
+      - "48545:8545"
+      - "48546:18546"
+      - "30333:30303"
+      - "30333:30303/udp"
+      - "30334:30304/udp"
+    volumes:
+      - /etc/localtime:/etc/localtime
+      - ./data3:/root/.ethereum/
+    environment:
+      - TZ=Asia/Shanghai
+    container_name: node3

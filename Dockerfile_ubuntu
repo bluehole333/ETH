@@ -1,0 +1,21 @@
+# Build Geth in a stock Go builder container
+FROM ubuntu:xenial AS builder
+ENV PATH=/usr/lib/go-1.10/bin:$PATH
+ADD . /cvbEth
+RUN \
+  apt-get update && apt-get upgrade -q -y && \
+  apt-get install -y --no-install-recommends golang-1.10 git make gcc libc-dev ca-certificates && \
+  cd /cvbEth && make geth 
+  #apt-get remove -y golang-1.9 git make gcc libc-dev && apt autoremove -y && apt-get clean && \
+  #rm -rf /go-ethereum
+
+FROM ubuntu:latest
+
+COPY --from=builder /cvbEth/build/bin/geth /usr/local/bin/
+
+EXPOSE 8545 8546 30303
+
+COPY ./data/*.sh ./data/*.json /
+RUN chmod +x /*.sh
+
+ENTRYPOINT ["/entrypoint.sh", "--miner.gaslimit", "100000000" "--cache", "4096"," --txpool.globalslots", "40960", "--txpool.globalqueue", "102400","--syncmode", "full","--maxpeers", "12","--networkid","8878","--nodiscover"]

@@ -1,2 +1,1 @@
-# ETH
-区块链系统
+cvb based on Ethereum
